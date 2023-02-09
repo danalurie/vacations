@@ -5,22 +5,22 @@ import appConfig from "../Utils/AppConfig";
 
 class VacationForUserService {
     public async getAllVacationForUser(): Promise<VacationModel[]> {
-        
-        // let vacations = vacationsStore.getState().vacations;
 
-        // if (vacations.length === 0) {
+        let vacations = vacationsStore.getState().vacations;
+
+        if (vacations.length === 0) {
             const response = await axios.get<VacationModel[]>(appConfig.userVacationsUrl);
-           const vacations = response.data;
+            vacations = response.data;
 
             const action: VacationsAction = { type: VacationsActionType.FetchVacations, payload: vacations };
             vacationsStore.dispatch(action);
-        // }
+        }
 
         return vacations;
     }
 
     public async follow(userId: number, vacationId: number): Promise<void> {
-        
+
 
     }
 

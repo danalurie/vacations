@@ -7,8 +7,7 @@ function Home(): JSX.Element {
             
             <p>Find here the best vacation in the world!</p>
             {/* <img src={imageSource} /> */}
-            <br/>
-            <AuthMenu/>
+            
 
         </div>
     );

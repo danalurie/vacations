@@ -1,8 +1,6 @@
-import { log } from "console";
 import { useEffect, useState } from "react";
 import UserModel from "../../../Models/UserModel";
 import VacationModel from "../../../Models/VacationModel";
-import { authStore } from "../../../Redux/AuthState";
 import vacationForAdminService from "../../../Services/VacationForAdminService";
 import vacationForUserService from "../../../Services/VacationForUserService";
 import notify from "../../../Utils/Notify";
@@ -29,7 +27,8 @@ function VacationList(): JSX.Element {
 
     return (
         <div className="VacationList">
-            {vacations && vacations.map(v => <VacationCard key={v.vacationId} vacation={v} />)}
+            
+            {vacations && vacations.map(v => <VacationCard key={v.vacationId} vacation={v} isAdmin/>)}
         </div>
     );
 }

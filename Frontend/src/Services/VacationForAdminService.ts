@@ -22,7 +22,7 @@ class VacationForAdminService {
     public async getOneVacationForAdmin(vacationId: number): Promise<VacationModel> {
         let vacations = vacationsStore.getState().vacations;
         let vacation = vacations.find(v => v.vacationId === vacationId);
-        
+
         if (!vacation) {
             const response = await axios.get<VacationModel>(appConfig.adminVacationsUrl + vacationId);
             vacation = response.data;
