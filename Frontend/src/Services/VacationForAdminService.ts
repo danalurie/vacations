@@ -5,7 +5,7 @@ import { VacationsAction, VacationsActionType, vacationsStore } from "../Redux/V
 import appConfig from "../Utils/AppConfig";
 
 class VacationForAdminService {
-    public async getAllVacationForAdmin(admin: UserModel): Promise<VacationModel[]> {
+    public async getAllVacationForAdmin(): Promise<VacationModel[]> {
         let vacations = vacationsStore.getState().vacations;
 
         if (vacations.length === 0) {

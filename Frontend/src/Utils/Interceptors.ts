@@ -13,14 +13,13 @@ class Interceptors {
             if(authService.isLoggedIn()) {
 
                 // Add authorization header containing the string: "Bearer the-token"
-                // request.headers.authorization = "Bearer " + authStore.getState().token;
+                request.headers.authorization = "Bearer " + authStore.getState().token;
             }
 
             return request;
 
         });
     }
-
 }
 
 const interceptors = new Interceptors();

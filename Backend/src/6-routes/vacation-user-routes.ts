@@ -7,7 +7,7 @@ import vacationUserService from "../5-services/vacation-user-service";
 const router = express.Router(); // Capital R
 
 // GET http://localhost:4000/api/user/vacations
-router.get("/user/vacations", async (request: Request, response: Response, next: NextFunction) => {
+router.get("/user/vacations",verifyLoggedIn, async (request: Request, response: Response, next: NextFunction) => {
     try {
         const user = cyber.getUserFromToken(request)
         const vacations = await vacationUserService.getAllVacationForUser(user);

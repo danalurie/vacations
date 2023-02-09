@@ -9,6 +9,7 @@ class VacationModel {
     public endDate: string;
     public price: number;
     public imageName: string;
+    // public imageUrl: string;
     public image: File;
 
     public static destinationValidation: RegisterOptions = {

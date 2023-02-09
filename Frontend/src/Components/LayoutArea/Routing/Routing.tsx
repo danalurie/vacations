@@ -10,7 +10,7 @@ function Routing(): JSX.Element {
     return (
         <Routes>
             <Route path="/home" element={<Home />} />
-            <Route path="/user/vacations" element={<VacationList />} />
+            <Route path="/vacations" element={<VacationList />} />
             <Route path="/add" element={<Insert />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
