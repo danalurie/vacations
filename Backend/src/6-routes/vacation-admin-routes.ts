@@ -7,7 +7,7 @@ import vacationAdminService from "../5-services/vacation-admin-service";
 
 const router = express.Router();
 
-// GET http://localhost:4000/api/admin/vacations
+// GET http://localhost:4001/api/admin/vacations
 router.get("/admin/vacations", verifyAdmin, async (request: Request, response: Response, next: NextFunction) => {
     try {
         const admin = cyber.getUserFromToken(request)
@@ -19,11 +19,11 @@ router.get("/admin/vacations", verifyAdmin, async (request: Request, response: R
     }
 });
 
-// GET http://localhost:4000/api/admin/vacations/:vacationId
+// GET http://localhost:4001/api/admin/vacations/:vacationId
 router.get("/admin/vacations/:vacationId", verifyAdmin, async (request: Request, response: Response, next: NextFunction) => {
     try {
         const vacationId = +request.params.vacationId;
-        const vacation = await vacationAdminService.getOneVacationForAdmin(vacationId);
+        const vacation = await vacationAdminService.getOneVacation(vacationId);
         response.json(vacation);
     }
     catch (err: any) {
@@ -31,7 +31,7 @@ router.get("/admin/vacations/:vacationId", verifyAdmin, async (request: Request,
     }
 });
 
-// POST http://localhost:4000/api/admin/vacations
+// POST http://localhost:4001/api/admin/vacations
 router.post("/admin/vacations",verifyAdmin ,async (request: Request, response: Response, next: NextFunction) => {
     try {
         request.body.image = request.files?.image;
@@ -44,10 +44,10 @@ router.post("/admin/vacations",verifyAdmin ,async (request: Request, response: R
     }
 });
 
-// PUT http://localhost:4000/api/admin/vacations/:vacationId
+// PUT http://localhost:4001/api/admin/vacations/:vacationId
 router.put("/admin/vacations/:vacationId([0-9]+)",verifyAdmin ,async (request: Request, response: Response, next: NextFunction) => {
     try {
-        request.body.vacationId = request.params.vacationId;
+        request.body.vacationId = +request.params.vacationId;
         request.body.image = request.files?.image;
         const vacation = new VacationModel(request.body);
         const updatedVacation = await vacationAdminService.updateVacation(vacation);
@@ -58,7 +58,7 @@ router.put("/admin/vacations/:vacationId([0-9]+)",verifyAdmin ,async (request: R
     }
 });
 
-// DELETE http://localhost:4000/api/admin/vacations/:vacationId
+// DELETE http://localhost:4001/api/admin/vacations/:vacationId
 router.delete("/admin/vacations/:vacationId([0-9]+)",verifyAdmin ,async (request: Request, response: Response, next: NextFunction) => {
     try {
         const vacationId = +request.params.vacationId;
@@ -70,7 +70,7 @@ router.delete("/admin/vacations/:vacationId([0-9]+)",verifyAdmin ,async (request
     }
 });
 
-// GET http://localhost:4000/api/admin/vacations/images/:imageName
+// GET http://localhost:4001/api/admin/vacations/images/:imageName
 router.get("/admin/vacations/images/:imageName", async (request: Request, response: Response, next: NextFunction) => {
     try {
         const imageName = request.params.imageName;

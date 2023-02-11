@@ -5,7 +5,7 @@ function Home(): JSX.Element {
     return (
         <div className="Home">
             
-            <p>Find here the best vacation in the world!</p>
+            <p>Let the journey begin</p>
             {/* <img src={imageSource} /> */}
             
 

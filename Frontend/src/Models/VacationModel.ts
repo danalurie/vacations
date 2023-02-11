@@ -24,11 +24,11 @@ class VacationModel {
     };
     
     public static startDateValidation: RegisterOptions = {
-        required: { value: true, message: "Missing description" },
+        required: { value: true, message: "Missing start date" },
     };
     
     public static endDateValidation: RegisterOptions = {
-        required: { value: true, message: "Missing description" },
+        required: { value: true, message: "Missing end date" },
     };
 
     public static priceValidation: RegisterOptions = {

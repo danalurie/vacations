@@ -14,7 +14,7 @@ function AddVacation(): JSX.Element {
             vacation.image = (vacation.image as unknown as FileList)[0];
             await vacationForAdminService.addVacation(vacation);
             notify.success("Vacation has been added");
-            navigate("/vacations/add");
+            navigate("/vacations");
         }
         catch (err: any) {
             notify.error(err);

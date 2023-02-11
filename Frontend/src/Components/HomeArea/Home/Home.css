@@ -1,3 +1,11 @@
-.Home {
-
+.Home p{
+    font-size: 60px;
+    font-weight: 900;
+    font-family: homeFont;
+    -webkit-text-stroke: 0.5px yellow;
 }
+
+@font-face {
+    font-family: homeFont;
+    src: url(../../../Assets/fonts/MIDLANER\ DEMO.ttf);
+  }

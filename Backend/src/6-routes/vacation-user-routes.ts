@@ -6,7 +6,7 @@ import vacationUserService from "../5-services/vacation-user-service";
 
 const router = express.Router(); // Capital R
 
-// GET http://localhost:4000/api/user/vacations
+// GET http://localhost:4001/api/user/vacations
 router.get("/user/vacations",verifyLoggedIn, async (request: Request, response: Response, next: NextFunction) => {
     try {
         const user = cyber.getUserFromToken(request)
@@ -18,7 +18,7 @@ router.get("/user/vacations",verifyLoggedIn, async (request: Request, response: 
     }
 });
 
-// POST http://localhost:4000/api/user/follow/:vacationId
+// POST http://localhost:4001/api/user/follow/:vacationId
 router.post("/user/follow/:vacationId", verifyLoggedIn, async (request: Request, response: Response, next: NextFunction) => {
     try {
         const user = cyber.getUserFromToken(request);
@@ -31,7 +31,7 @@ router.post("/user/follow/:vacationId", verifyLoggedIn, async (request: Request,
     }
 });
 
-// DELETE http://localhost:4000/api/user/infollow/:vacationId
+// DELETE http://localhost:4001/api/user/infollow/:vacationId
 router.delete("/user/unfollow/:vacationId", verifyLoggedIn, async (request: Request, response: Response, next: NextFunction) => {
     try {
         const user = cyber.getUserFromToken(request)
@@ -44,7 +44,7 @@ router.delete("/user/unfollow/:vacationId", verifyLoggedIn, async (request: Requ
     }
 });
 
-// GET http://localhost:4000/api/user/vacations/images/:imageName
+// GET http://localhost:4001/api/user/vacations/images/:imageName
 router.get("/user/vacations/images/:imageName", async (request: Request, response: Response, next: NextFunction) => {
     try {
         const imageName = request.params.imageName;

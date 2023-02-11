@@ -15,11 +15,11 @@ function EditVacation(): JSX.Element {
     const params = useParams();
 
     useEffect(() => {
-        vacationForAdminService.getOneVacationForAdmin(+params.vacationId)
+        vacationForAdminService.getOneVacation(+params.vacationId)
             .then(vacation => {
                 setValue("vacationId", vacation.vacationId);    
-                setValue("description", vacation.description);
                 setValue("destination", vacation.destination);
+                setValue("description", vacation.description);
                 setValue("startDate", vacation.startDate);
                 setValue("endDate", vacation.endDate);
                 setValue("price", vacation.price);
@@ -73,7 +73,7 @@ function EditVacation(): JSX.Element {
                 <input type="file" accept="image/*" {...register("image", VacationModel.imageValidation)} />
                 <span className="Err">{formState.errors.image?.message}</span>
 
-                <button>Add</button>
+                <button>Update</button>
 
             </form>
 

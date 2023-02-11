@@ -1,7 +1,7 @@
 import axios from "axios";
 import UserModel from "../Models/UserModel";
 import VacationModel from "../Models/VacationModel";
-import { VacationsAction, VacationsActionType, vacationsStore } from "../Redux/VcationState";
+import { VacationsAction, VacationsActionType, vacationsStore } from "../Redux/VacationState";
 import appConfig from "../Utils/AppConfig";
 
 class VacationForAdminService {
@@ -19,8 +19,9 @@ class VacationForAdminService {
         return vacations;
     }
 
-    public async getOneVacationForAdmin(vacationId: number): Promise<VacationModel> {
+    public async getOneVacation(vacationId: number): Promise<VacationModel> {
         let vacations = vacationsStore.getState().vacations;
+        console.log(vacations[0].vacationId);
         let vacation = vacations.find(v => v.vacationId === vacationId);
 
         if (!vacation) {
@@ -29,6 +30,7 @@ class VacationForAdminService {
         }
 
         return vacation;
+
     }
 
     public async addVacation(vacation: VacationModel): Promise<void> {

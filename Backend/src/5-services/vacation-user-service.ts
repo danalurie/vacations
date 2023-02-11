@@ -10,7 +10,7 @@ async function getAllVacationForUser(user: UserModel): Promise<VacationModel[]> 
             V.*,
             EXISTS(SELECT * FROM followers WHERE vacationId = F.vacationId AND userId = ?) AS isFollowing,
             COUNT(F.userId) AS followersCount,
-            CONCAT( ?, imageName) AS imageUrl
+            CONCAT( ?, imageName) AS imageName
         FROM vacations AS V LEFT JOIN followers AS F
         ON V.vacationId = F.vacationId
         GROUP BY vacationId
