@@ -38,15 +38,17 @@ function AddVacation(): JSX.Element {
                 <span className="Err">{formState.errors.destination?.message}</span>
 
                 <label>Description: </label>
-                <input type="text" {...register("description", VacationModel.descriptionValidation)} />
+                <br/>
+                <textarea {...register("description", VacationModel.descriptionValidation)} />
                 <span className="Err">{formState.errors.description?.message}</span>
 
+                <br/>
                 <label>start date: </label>
                 <input type="date" onChange={validateEndDate} min={new Date().toISOString().substring(0, 10)} {...register("startDate", VacationModel.startDateValidation)} />
                 <span className="Err">{formState.errors.startDate?.message}</span>
 
                 <label>End date: </label>
-                <input type="date" {...register("endDate", VacationModel.endDateValidation)} min={new Date().toISOString().substring(0, 10)}/>
+                <input type="date" {...register("endDate", VacationModel.endDateValidation)} min={new Date().toISOString().substring(0, 10)} />
                 <span className="Err">{formState.errors.endDate?.message}</span>
 
                 <label>Price: </label>

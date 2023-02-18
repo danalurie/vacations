@@ -63,13 +63,15 @@ function EditVacation(): JSX.Element {
                 <input type="hidden" {...register("vacationId")} />
 
                 <label>Destination: </label>
-                <input type="text" {...register("destination", VacationModel.destinationValidation)} />
+                <input type="textArea" {...register("destination", VacationModel.destinationValidation)}/>
                 <span className="Err">{formState.errors.destination?.message}</span>
 
                 <label>Description: </label>
-                <input type="text" {...register("description", VacationModel.descriptionValidation)} />
+                <br/>
+                <textarea {...register("description", VacationModel.descriptionValidation)} />
                 <span className="Err">{formState.errors.description?.message}</span>
 
+                <br/>
                 <label>start date: </label>
                 <input type="date" {...register("startDate", VacationModel.startDateValidation)} onChange={validateEndDate} min={new Date().toISOString().substring(0, 10)} />
                 <span className="Err">{formState.errors.startDate?.message}</span>
@@ -83,7 +85,7 @@ function EditVacation(): JSX.Element {
                 <span className="Err">{formState.errors.price?.message}</span>
 
                 <label>Image: </label>
-                <input type="file" accept="image/*" {...register("image", VacationModel.imageValidation)} />
+                <input type="file" accept="image/*" {...register("image")} />
                 <span className="Err">{formState.errors.image?.message}</span>
 
                 <button>Update</button>
