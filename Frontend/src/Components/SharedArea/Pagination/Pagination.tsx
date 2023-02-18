@@ -1,6 +1,6 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
-import ReactDOM from 'react-dom';
+import { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
+import UserModel from '../../../Models/UserModel';
 import VacationModel from '../../../Models/VacationModel';
 import { authStore } from '../../../Redux/AuthState';
 import { vacationsStore } from '../../../Redux/VacationState';
@@ -12,7 +12,12 @@ import "./Pagination.css";
 function Pagination(): JSX.Element {
 
     const [vacations, setVacations] = useState<VacationModel[]>([]);
+    const [user, setUser] = useState<UserModel>(authStore.getState().user);
+    const [filterFollow, setFilterFollow] = useState<boolean>(false);
+    const [filterFuture, setFilterFuture] = useState<boolean>(false);
+    const [filterIsOn, setFilterIsOn] = useState<boolean>(false);
 
+    //pagination:
     const vacationsPerPage = 10;
     const [startOffset, setStartOffset] = useState(0)
 
@@ -30,8 +35,21 @@ function Pagination(): JSX.Element {
         setStartOffset(newOffset)
     }
 
+    //filters:
+    function filteredVacations(vacations: VacationModel[]): VacationModel[] {
+        if (filterFollow) {
+            vacations = vacations.filter(v => v.isFollowing);
+        }
+        if (filterFuture) {
+            vacations = vacations.filter(v => Date.parse(v.startDate) > Date.now());
+        }
+        if (filterIsOn) {
+            vacations = vacations.filter(v => Date.parse(v.startDate) <= Date.now() && Date.parse(v.endDate) >= Date.now());
+        }
+
+        return vacations;
+    }
     useEffect(() => {
-        let user = authStore.getState().user
         if (user && user.role === "Admin") {
             vacationForAdminService.getAllVacationForAdmin()
             setVacations(vacationsStore.getState().vacations);
@@ -41,16 +59,39 @@ function Pagination(): JSX.Element {
         }
         else {
             vacationForUserService.getAllVacationForUser()
-            setVacations(vacationsStore.getState().vacations);
+            setVacations(filteredVacations(vacationsStore.getState().vacations));
             vacationsStore.subscribe(() => {
-                setVacations(vacationsStore.getState().vacations)
+                setVacations(vacationsStore.getState().vacations);
             })
         }
-    }, [vacations]);
+    }, [filterFollow, filterFuture, filterIsOn]);
 
 
     return (
         <>
+            {user?.role === "User" &&
+                <div>
+                    <input type="checkbox" onChange={(e) => {
+                        setFilterFollow(e.target.checked);
+                        setStartOffset(0);
+                    }}
+                    />
+                    <label>Following</label>
+
+                    <input type="checkbox" onChange={(e) => {
+                        setFilterIsOn(e.target.checked);
+                        setStartOffset(0);
+                    }} />
+                    <label>Vacation is on now</label>
+
+                    <input type="checkbox" onChange={(e) => {
+                        setFilterFuture(e.target.checked);
+                        setStartOffset(0);
+                    }} />
+                    <label>Future vacation</label>
+                </div>
+            }
+
             <VacationList currentVacations={currentVacation} />
             <ReactPaginate
                 breakLabel="..."

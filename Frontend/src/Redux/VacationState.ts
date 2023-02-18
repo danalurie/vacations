@@ -11,7 +11,8 @@ export enum VacationsActionType {
     FetchVacations = "FetchVacations",
     AddVacation = "AddVacation",
     UpdateVacation = "UpdateVacation",
-    DeleteVacation = "DeleteVacation"
+    DeleteVacation = "DeleteVacation",
+    DeleteAll = "DeleteAll"
 }
 
 // 3. Action - a single object describing single operation on the data:
@@ -45,6 +46,9 @@ export function vacationsReducer(currentState = new VacationState(), action: Vac
             if (indexToDelete >= 0) {
                 newState.vacations.splice(indexToDelete, 1);
             }
+            break;
+        case VacationsActionType.DeleteAll:
+            newState.vacations = [];
             break;
     }
     return newState;

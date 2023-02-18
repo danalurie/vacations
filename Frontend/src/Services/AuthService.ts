@@ -2,6 +2,7 @@ import axios from "axios";
 import CredentialsModel from "../Models/CredentialsModel";
 import UserModel from "../Models/UserModel";
 import { AuthActionType, authStore } from "../Redux/AuthState";
+import { VacationsActionType, vacationsStore } from "../Redux/VacationState";
 import appConfig from "../Utils/AppConfig";
 
 class AuthService {
@@ -35,6 +36,7 @@ class AuthService {
     // Logout:
     public logout(): void {
         authStore.dispatch({ type: AuthActionType.Logout });
+        vacationsStore.dispatch({ type: VacationsActionType.DeleteAll, payload: "" })
     }
 
     // Is user logged in:

@@ -6,12 +6,12 @@ import appConfig from "../Utils/AppConfig";
 class VacationForAdminService {
     public async getAllVacationForAdmin(): Promise<VacationModel[]> {
         let vacations = vacationsStore.getState().vacations;
-    
+
         if (vacations.length === 0) {
             const response = await axios.get<VacationModel[]>(appConfig.adminVacationsUrl);
-            
+
             vacations = response.data;
-            
+
             const action: VacationsAction = { type: VacationsActionType.FetchVacations, payload: vacations };
             vacationsStore.dispatch(action);
         }
@@ -42,10 +42,8 @@ class VacationForAdminService {
 
     public async updateVacation(vacation: VacationModel): Promise<void> {
         const headers = { "Content-Type": "multipart/form-data" };
-        const response = await axios.put<VacationModel>(appConfig.adminVacationsUrl, vacation.vacationId, { headers });
-        const updatedVacation = response.data;
-        vacationsStore.dispatch({ type: VacationsActionType.UpdateVacation, payload: updatedVacation });
-        return this.getAllAndUpdate();
+        return axios.put<VacationModel>(appConfig.adminVacationsUrl + vacation.vacationId, vacation, { headers })
+            .then(this.getAllAndUpdate)
     }
 
     public async deleteVacation(vacationId: number): Promise<void> {
@@ -54,7 +52,7 @@ class VacationForAdminService {
         return this.getAllAndUpdate();
     }
 
-    
+
     public async getAllAndUpdate() {
         const response = await axios.get<VacationModel[]>(appConfig.userVacationsUrl);
         let vacations = response.data;

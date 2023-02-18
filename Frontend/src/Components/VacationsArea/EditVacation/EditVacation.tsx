@@ -39,7 +39,7 @@ function EditVacation(): JSX.Element {
 
     async function send(vacation: VacationModel) {
         try {
-            vacation.image = (vacation.image as unknown as FileList)[0];
+            // vacation.image = (vacation.image as unknown as FileList)[0];
             await vacationForAdminService.updateVacation(vacation);
             notify.success("Vacation has been updated");
             navigate("/vacations");
