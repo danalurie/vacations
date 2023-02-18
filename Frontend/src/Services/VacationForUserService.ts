@@ -19,20 +19,24 @@ class VacationForUserService {
         return vacations;
     }
 
-    public async follow(userId: number, vacationId: number): Promise<void> {
-
-
-    }
-
-
-    public async unfollow(userId: number, vacationId: number): Promise<void> {
-
+    public async follow(vacationId: number): Promise<void> {
+        return axios.post(appConfig.followUrl + vacationId)
+        .then(this.getAllIfFollow)
 
     }
 
+    public async unfollow(vacationId: number): Promise<void> {
+        return axios.delete(appConfig.followUrl + vacationId)
+        .then(this.getAllIfFollow)
 
+    }
 
-
+    public async getAllIfFollow() {
+        const response = await axios.get<VacationModel[]>(appConfig.userVacationsUrl);
+        let vacations = response.data;
+        const action: VacationsAction = { type: VacationsActionType.FetchVacations, payload: vacations };
+        vacationsStore.dispatch(action);
+    }
 
 }
 

@@ -26,7 +26,7 @@ class VacationModel {
     private static postValidationSchema = Joi.object({
         vacationId: Joi.number().forbidden(),
         destination: Joi.string().required().min(2).max(50),
-        description: Joi.string().required().min(2).max(1000),
+        description: Joi.string().required().min(2).max(10000),
         startDate: Joi.date().required(),
         endDate: Joi.date().required(),
         price: Joi.number().required().positive(),

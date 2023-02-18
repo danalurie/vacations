@@ -1,75 +1,76 @@
 import { UploadedFile } from "express-fileupload";
 import { v4 as uuid } from "uuid";
-import fsPromises from "fs/promises";
+import fsPromises from "fs/promises"
 import path from "path";
 import fs from "fs";
 
-const imagesFolder = "./src/1-assets/images/";
+const vacationImagesFolder = "./src/1-assets/images/vacations/";
 
 async function saveImage(image: UploadedFile): Promise<string> {
 
     const uniqueImageName = createImageName(image.name);
 
-    //Create unique image name:
-    const absolutePath = imagesFolder + uniqueImageName; // <-----
+    // Create unique image name:
+    const absolutePath = vacationImagesFolder + uniqueImageName;
 
-    //Save to disk:
+    // Save to disk:
     await image.mv(absolutePath); // mv = move
 
-    //Return new name:
+    // Return new name:
     return uniqueImageName;
+
 }
 
+// Update existing image:
 async function updateImage(image: UploadedFile, existingImageName: string): Promise<string> {
-    
-    //Delete existing image:
+
+    // Delete existing image:
     await deleteImage(existingImageName);
 
-    //Save new image to disk: 
+    // Save new image to disk:
     const uniqueImageName = await saveImage(image);
 
-    //Return unique name:
     return uniqueImageName;
-
 }
 
+// Delete existing image:
 async function deleteImage(existingImageName: string): Promise<void> {
     try {
 
-        if(!existingImageName) return;
-        //Delete image from disk:
-        await fsPromises.unlink(imagesFolder + existingImageName);
+        // if no image sent:
+        if (!existingImageName) return;
+
+        // Delete image from disk:
+        await fsPromises.unlink(vacationImagesFolder + existingImageName);
     }
-    catch(err: any) {
-        console.error(err.message);
+    catch (err: any) {
+        console.log(err.message);
     }
 }
 
-
 function createImageName(originalImageName: string): string {
 
-    //Take original extension:
+    // Take original name's extension:
     const extension = originalImageName.substring(originalImageName.lastIndexOf("."));
 
-    //Create unique name including original extension (v4 = 36 chars uuid):
+    // Create unique name including original extension (v4 = 36 chars uuid):
     const uniqueImageName = uuid() + extension;
 
-    //Return unique name:
+    // Return unique name:
     return uniqueImageName;
 }
 
 function getAbsolutePath(imageName: string): string {
-    let absolutePath = path.join(__dirname,"..", "1-assets", "images", imageName);
-    if(!fs.existsSync(absolutePath)) {
-        absolutePath = path.join(__dirname,"..", "1-assets", "images");
+    let absolutePath = path.join(__dirname, "..", "1-assets", "images", "vacations", imageName);
+    if (!fs.existsSync(absolutePath)) {
+        absolutePath = path.join(__dirname, "..", "1-assets", "images", "not-found.png");
     }
     return absolutePath;
 }
-
 
 export default {
     saveImage,
     updateImage,
     deleteImage,
     getAbsolutePath
-}
+};

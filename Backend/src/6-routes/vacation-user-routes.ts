@@ -32,7 +32,7 @@ router.post("/user/follow/:vacationId", verifyLoggedIn, async (request: Request,
 });
 
 // DELETE http://localhost:4001/api/user/infollow/:vacationId
-router.delete("/user/unfollow/:vacationId", verifyLoggedIn, async (request: Request, response: Response, next: NextFunction) => {
+router.delete("/user/follow/:vacationId", verifyLoggedIn, async (request: Request, response: Response, next: NextFunction) => {
     try {
         const user = cyber.getUserFromToken(request)
         const vacationId = +request.params.vacationId

@@ -14,8 +14,9 @@ function Register(): JSX.Element {
     async function send(user: UserModel) {
         try {
             await authService.register(user);
+            localStorage.setItem('userRole', user.role);
             notify.success("Welcome " + user.firstName);
-            navigate("/login");
+            navigate("/vacations");
         }
         catch (err: any) {
             notify.error(err)

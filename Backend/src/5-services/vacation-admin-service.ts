@@ -9,6 +9,8 @@ import VacationModel from "../4-models/vacation-model";
 async function getAllVacationForAdmin(admin: UserModel): Promise<VacationModel[]> {
     const sql = "SELECT *, CONCAT( ?, imageName) AS imageName FROM vacations ORDER BY startDate";
     const vacations = await dal.execute(sql, appConfig.adminImage);
+    console.log(vacations);
+    
     return vacations;
 }
 
@@ -26,7 +28,7 @@ async function addVacation(vacation: VacationModel): Promise<VacationModel> {
     vacation.imageName = await imageHandler.saveImage(vacation.image);
 
     const sql = "INSERT INTO vacations VALUES(DEFAULT, ?, ?, ?, ?, ?, ?)";
-    const result: OkPacket = await dal.execute(sql, vacation.description, vacation.destination, vacation.startDate, vacation.endDate, vacation.price, vacation.imageName);
+    const result: OkPacket = await dal.execute(sql, vacation.destination, vacation.description, vacation.startDate, vacation.endDate, vacation.price, vacation.imageName);
     vacation.vacationId = result.insertId;
 
     delete vacation.image;

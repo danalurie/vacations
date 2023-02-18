@@ -1,21 +1,23 @@
-import { useState } from "react";
-import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { ChangeEvent, useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import VacationModel from "../../../Models/VacationModel";
-import { vacationsStore } from "../../../Redux/VacationState";
 import vacationForAdminService from "../../../Services/VacationForAdminService";
 import notify from "../../../Utils/Notify";
-import "./VacationCard.css";
+import redHeartImage from "../../../Assets/Images/redHeart.png";
+import blackHeartImage from "../../../Assets/Images/blackHeart.png";
 
+import "./VacationCard.css";
+import vacationForUserService from "../../../Services/VacationForUserService";
 
 interface VacationCardProps {
     vacation: VacationModel;
-    isAdmin: boolean;
 }
 
 function VacationCard(props: VacationCardProps): JSX.Element {
 
     const [vacations, setVacations] = useState<VacationModel>();
     const navigate = useNavigate();
+    const storedUserRole = localStorage.getItem("userRole");
 
     async function deleteVacation(vacationId: number) {
         try {
@@ -24,7 +26,7 @@ function VacationCard(props: VacationCardProps): JSX.Element {
             if (!sure) return;
 
             await vacationForAdminService.deleteVacation(vacationId);
-            notify.success("Product has been deleted");
+            notify.success("Vacation has been deleted");
             navigate("/vacations");
         }
         catch (err: any) {
@@ -32,39 +34,51 @@ function VacationCard(props: VacationCardProps): JSX.Element {
         }
     }
 
+    function handleFollow(event: ChangeEvent<HTMLInputElement>) {
+        if (event.target.checked) {
+            vacationForUserService.follow(props.vacation.vacationId);
+        }
+        else {
+            vacationForUserService.unfollow(props.vacation.vacationId);
+        }
+    }
+
+    let isFollowed = false;
+    if (props.vacation.isFollowing === 1) {
+        isFollowed = true;
+    }
+
     return (
 
-        <div className="ProductCard Box">
+        <div className="VacationCard Box">
+            <img className="imgCard" src={props.vacation?.imageName} />
+            <br />
+            <div className="cardBtn">{storedUserRole === "Admin" ?
+                <div>
+                    <NavLink to={"/vacations/edit/" + props.vacation.vacationId} >✏️</NavLink>
+                    <NavLink to="#" onClick={() => { deleteVacation(props.vacation.vacationId) }}>❌</NavLink>
+                </div>
+                :
+                <div>
+                <input type="checkbox" onChange={handleFollow} defaultChecked={isFollowed} />
+                {props.vacation.followersCount}
+                </div>
 
-            <>
-                <img src={props.vacation.imageName} />
-                <br />
-                {props.vacation.destination}
-                <br />
-                {props.vacation.description}
-                <br />
-                {new Date(props.vacation.startDate).toLocaleDateString("HE-IL").toString()} -
-                <br></br>
-                {new Date(props.vacation.endDate).toLocaleDateString("HE-IL").toString()}
-                <br />
-                <br />
-                {props.vacation.price}$
-            </>
-            <div>
-                {props.isAdmin ? (
-                    <div>
-                        <NavLink to={"/vacations/edit/" + props.vacation.vacationId} >✏️</NavLink>
-                        <NavLink to="#" onClick={() => { deleteVacation(props.vacation.vacationId) }}>❌</NavLink>
-                    </div>
-
-                ) : <button>
-                    💖
-                </button>}
+            }
             </div>
+            {props.vacation.destination}
+            <br />
+            {props.vacation.description}
+            <br />
+            {new Date(props.vacation.startDate).toLocaleDateString("HE-IL").toString()} -
+            <br />
+            {new Date(props.vacation.endDate).toLocaleDateString("HE-IL").toString()}
+            <br />
+            <br />
+            {props.vacation.price}$
         </div>
     );
 }
-
 
 export default VacationCard;
 

@@ -11,12 +11,9 @@ class AuthService {
 
         // Send user to backend:
         const response = await axios.post<string>(appConfig.registerUrl, user);
-        console.log(user);
 
         // Get the returned token:
         const token = response.data;
-
-        console.log(token);
 
         // Send token to global state:
         authStore.dispatch({ type: AuthActionType.Register, payload: token });

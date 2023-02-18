@@ -7,6 +7,7 @@ export class AuthState {
 
     public token: string = null;
     public user: UserModel = null;
+    public userRole: string = null;
 
     // Load back the token from storage if exists:
     public constructor() {
@@ -43,7 +44,10 @@ export function authReducer(currentState = new AuthState(), action: AuthAction):
             newState.token = action.payload;
             const userContainer = jwtDecode<{ user: UserModel }>(newState.token);
             newState.user = userContainer.user;
+            newState.userRole = userContainer.user.role; // set userRole from decoded token
             localStorage.setItem("token", newState.token); // Save token to storage for persisting token after refresh
+            localStorage.setItem("userRole", newState.userRole); // save userRole in localStorage
+
             break;
 
         case AuthActionType.Logout:

@@ -1,13 +1,17 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import CredentialsModel from "../../../Models/CredentialsModel";
+import UserModel from "../../../Models/UserModel";
 import authService from "../../../Services/AuthService";
 import notify from "../../../Utils/Notify";
 import "./Login.css";
 
 function Login(): JSX.Element {
     const { register, handleSubmit, formState } = useForm<CredentialsModel>();
+    const [user, setUser] = useState<UserModel>();
+
     const navigate = useNavigate();
 
     async function send(credentials: CredentialsModel){

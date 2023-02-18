@@ -10,6 +10,8 @@ class VacationModel {
     public price: number;
     public imageName: string;
     public image: File;
+    public isFollowing: number;
+    public followersCount: number;
 
     public static destinationValidation: RegisterOptions = {
         required: { value: true, message: "Missing destination" },
@@ -20,7 +22,7 @@ class VacationModel {
     public static descriptionValidation: RegisterOptions = {
         required: { value: true, message: "Missing description" },
         minLength: { value: 2, message: "Description must be minimum 2 chars" },
-        maxLength: { value: 1000, message: "Description can't exceeds 50 chars" }
+        maxLength: { value: 10000, message: "Description can't exceeds 50 chars" }
     };
     
     public static startDateValidation: RegisterOptions = {

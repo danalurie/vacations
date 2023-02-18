@@ -1,4 +1,13 @@
-.VacationCard button{
-    
-	
+.VacationCard{
+    overflow: hidden;
+    box-sizing: inherit;
+    font-size: 20px;
+    height: 389px;
+    width: 275px;
 }
+
+.VacationCard button>img{
+    width: 10px;
+    height: 10px;
+}
+

@@ -1,3 +1,4 @@
+import { ChangeEvent, useState } from "react";
 import { useForm } from "react-hook-form";
 import { NavLink, useNavigate } from "react-router-dom";
 import VacationModel from "../../../Models/VacationModel";
@@ -7,6 +8,7 @@ import "./AddVacation.css";
 
 function AddVacation(): JSX.Element {
     const { register, handleSubmit, formState } = useForm<VacationModel>();
+    const [startDate, setStartDate] = useState(new Date());
     const navigate = useNavigate();
 
     async function send(vacation: VacationModel) {
@@ -20,6 +22,10 @@ function AddVacation(): JSX.Element {
             notify.error(err);
         }
     }
+
+    const validateEndDate = (args: ChangeEvent<HTMLInputElement>) => {
+        setStartDate(args.target.valueAsDate);
+    };
 
     return (
         <div className="AddVacation Box">
@@ -36,11 +42,11 @@ function AddVacation(): JSX.Element {
                 <span className="Err">{formState.errors.description?.message}</span>
 
                 <label>start date: </label>
-                <input type="date" {...register("startDate", VacationModel.startDateValidation)} />
+                <input type="date" onChange={validateEndDate} min={new Date().toISOString().substring(0, 10)} {...register("startDate", VacationModel.startDateValidation)} />
                 <span className="Err">{formState.errors.startDate?.message}</span>
 
                 <label>End date: </label>
-                <input type="date" {...register("endDate", VacationModel.endDateValidation)} />
+                <input type="date" {...register("endDate", VacationModel.endDateValidation)} min={new Date().toISOString().substring(0, 10)}/>
                 <span className="Err">{formState.errors.endDate?.message}</span>
 
                 <label>Price: </label>

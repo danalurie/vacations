@@ -1,16 +1,15 @@
-html, body, #root {
+html,
+body,
+#root {
     margin: 0;
     padding-top: 5px;
     height: 100%;
     text-align: center;
     font-size: x-large;
-    background-image: url(./Assets/Images/homeImage.jpg);
+    background-image: url(./Assets/Images/sky.jpg);
     background-repeat: no-repeat;
     background-size: cover;
-}
-
-a {
-    color: blue;
+    background-attachment: fixed
 }
 
 .Box{
@@ -21,25 +20,27 @@ a {
     border-radius: 10px;
     box-shadow: 5px 5px 10px;
 }
+
 form {
     width: 300px;
     text-align: left;
 }
 
-form > input, form > button {
+form>input,
+form>button {
     width: 100%;
     box-sizing: border-box;
     margin-bottom: 20px;
     font-size: x-large;
 }
 
-form > label {
+form>label {
     font-size: x-large;
 }
 
 .Err {
     color: red;
-    position:absolute;
+    position: absolute;
     font-size: x-large;
     margin: 0 20px;
 }

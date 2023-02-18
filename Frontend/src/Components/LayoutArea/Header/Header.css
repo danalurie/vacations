@@ -1,3 +1,10 @@
 .Header {
-	
+	text-align: left;
+}
+
+.Header img{
+    height: 70px;
+}
+.Header>span{
+    font-weight: 900;
 }

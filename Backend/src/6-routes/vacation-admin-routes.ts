@@ -13,6 +13,8 @@ router.get("/admin/vacations", verifyAdmin, async (request: Request, response: R
         const admin = cyber.getUserFromToken(request)
         const vacations = await vacationAdminService.getAllVacationForAdmin(admin);
         response.json(vacations);
+        console.log(vacations);
+        
     }
     catch (err: any) {
         next(err);

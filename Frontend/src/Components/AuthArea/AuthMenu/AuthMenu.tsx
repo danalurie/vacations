@@ -37,6 +37,8 @@ function AuthMenu(): JSX.Element {
             {user && <>
             
                 <span>Hello {user.firstName} {user.lastName} | </span>
+                <NavLink to="/vacations">Vacations</NavLink>
+                <span> | </span>
                 <NavLink to="/home" onClick={logout}>Logout</NavLink>
             
             </>}
