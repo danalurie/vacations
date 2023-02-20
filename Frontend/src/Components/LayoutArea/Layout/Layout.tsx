@@ -1,5 +1,4 @@
 import Header from "../Header/Header";
-import Menu from "../Menu/Menu";
 import Routing from "../Routing/Routing";
 import "./Layout.css";
 

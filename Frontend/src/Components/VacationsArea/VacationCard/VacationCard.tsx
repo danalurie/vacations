@@ -1,13 +1,16 @@
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import Favorite from '@mui/icons-material/Favorite';
+import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
+import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
+import Checkbox from '@mui/material/Checkbox';
+import { blueGrey } from '@mui/material/colors';
 import { ChangeEvent, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import VacationModel from "../../../Models/VacationModel";
 import vacationForAdminService from "../../../Services/VacationForAdminService";
-import notify from "../../../Utils/Notify";
-import redHeartImage from "../../../Assets/Images/redHeart.png";
-import blackHeartImage from "../../../Assets/Images/blackHeart.png";
-
-import "./VacationCard.css";
 import vacationForUserService from "../../../Services/VacationForUserService";
+import notify from "../../../Utils/Notify";
+import "./VacationCard.css";
 
 interface VacationCardProps {
     vacation: VacationModel;
@@ -49,36 +52,60 @@ function VacationCard(props: VacationCardProps): JSX.Element {
     }
 
     return (
-
         <div className="VacationCard Box">
             <img className="imgCard" src={props.vacation?.imageName} />
             <br />
             <div className="cardBtn">{storedUserRole === "Admin" ?
-                <div>
-                    <NavLink to={"/vacations/edit/" + props.vacation.vacationId} >✏️</NavLink>
-                    <NavLink to="#" onClick={() => { deleteVacation(props.vacation.vacationId) }}>❌</NavLink>
+                <div className="ButtonContainer">
+                    <button className="EditBtn">
+                        <NavLink to={"/vacations/edit/" + props.vacation.vacationId} >
+                            <ModeEditOutlineOutlinedIcon fontSize='inherit' />
+                            Edit
+                        </NavLink>
+                    </button>
+                    <button className="DeleteBtn">
+                        <NavLink to="#" onClick={() => { deleteVacation(props.vacation.vacationId) }}>
+                            <DeleteOutlineOutlinedIcon fontSize='inherit' />
+                            Delete
+                        </NavLink>
+                    </button>
+
                 </div>
                 :
                 <div>
-                <input type="checkbox" onChange={handleFollow} defaultChecked={isFollowed} />
-                {props.vacation.followersCount}
+                    <Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} onChange={handleFollow} defaultChecked={isFollowed}
+                        sx={{
+                            color: blueGrey[800],
+                            '&.Mui-checked': {
+                                color: blueGrey[600],
+                            }
+                        }}
+                    />
+                    {props.vacation.followersCount}
                 </div>
-
             }
+            </div >
+            <div className='Destination'>
+                {props.vacation.destination}
             </div>
-            {props.vacation.destination}
-            <br />
-            {props.vacation.description}
-            <br />
-            {new Date(props.vacation.startDate).toLocaleDateString("HE-IL").toString()} -
-            <br />
-            {new Date(props.vacation.endDate).toLocaleDateString("HE-IL").toString()}
-            <br />
-            <br />
-            {props.vacation.price}$
+
+            <div className='Description'>
+                {props.vacation.description}
+            </div>
+
+            <div className='DateAndPrice'>
+                <br />
+                {new Date(props.vacation.startDate).toLocaleDateString("HE-IL").toString()} -
+                {new Date(props.vacation.endDate).toLocaleDateString("HE-IL").toString()}
+                <br />
+                <br />
+                {props.vacation.price}$
+            </div>
         </div>
     );
 }
+
+
 
 export default VacationCard;
 

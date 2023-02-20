@@ -1,3 +1,7 @@
-.PageNotFound {
-	
+.PageNotFound img{
+	height: 500px;
+}
+
+.PageNotFound p{
+    font-size: 30px;
 }

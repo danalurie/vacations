@@ -1,3 +1,4 @@
+import { styled } from '@mui/material/styles';
 import { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import UserModel from '../../../Models/UserModel';
@@ -18,7 +19,7 @@ function Pagination(): JSX.Element {
     const [filterIsOn, setFilterIsOn] = useState<boolean>(false);
 
     //pagination:
-    const vacationsPerPage = 10;
+    const vacationsPerPage = 9;
     const [startOffset, setStartOffset] = useState(0)
 
     //check the last vacation for current page
@@ -93,7 +94,7 @@ function Pagination(): JSX.Element {
             }
 
             <VacationList currentVacations={currentVacation} />
-            <ReactPaginate
+            <ReactPaginate className="paginate"
                 breakLabel="..."
                 nextLabel="next >"
                 onPageChange={handlePageClick}

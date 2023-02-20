@@ -22,7 +22,7 @@ class VacationModel {
     public static descriptionValidation: RegisterOptions = {
         required: { value: true, message: "Missing description" },
         minLength: { value: 2, message: "Description must be minimum 2 chars" },
-        maxLength: { value: 10000, message: "Description can't exceeds 50 chars" }
+        maxLength: { value: 1000, message: "Description can't exceeds 1,000 chars" }
     };
     
     public static startDateValidation: RegisterOptions = {
@@ -36,6 +36,7 @@ class VacationModel {
     public static priceValidation: RegisterOptions = {
         required: { value: true, message: "Missing price" },
         min: { value: 0, message: "Price can't be negative" },
+        max: { value: 10000, message: "Price can't be more then 10,000" },
     };
 
     public static imageValidation: RegisterOptions = {

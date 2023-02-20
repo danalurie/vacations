@@ -1,8 +1,6 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { NavLink } from "react-router-dom";
-import { useNavigate, useParams } from "react-router-dom";
-import { start } from "repl";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import VacationModel from "../../../Models/VacationModel";
 import vacationForAdminService from "../../../Services/VacationForAdminService";
 import notify from "../../../Utils/Notify";
@@ -22,16 +20,10 @@ function EditVacation(): JSX.Element {
                 setValue("vacationId", vacation.vacationId);
                 setValue("destination", vacation.destination);
                 setValue("description", vacation.description);
-                const startDate = new Date(vacation.startDate);
-                startDate.setDate(startDate.getDate()+1);
-                const dateForSetValue = startDate.toISOString().substring(0,10);
-                setValue("startDate", vacation.startDate);
-                const endDate = new Date(vacation.startDate);
-                endDate.setDate(startDate.getDate()+1);
-                const endDateForSetValue = startDate.toISOString().substring(0,10);
-                setValue("endDate", vacation.endDate);
+                setValue("startDate", new Date(vacation.startDate).toISOString().slice(0, 10));
+                setValue("endDate", new Date(vacation.endDate).toISOString().slice(0, 10));
                 setValue("price", vacation.price);
-                setValue("image", vacation.image);
+                setValue("image", vacation.image);                
                 setVacation(vacation);
             })
             .catch(err => notify.error(err));
@@ -39,7 +31,7 @@ function EditVacation(): JSX.Element {
 
     async function send(vacation: VacationModel) {
         try {
-            // vacation.image = (vacation.image as unknown as FileList)[0];
+            vacation.image = (vacation.image as unknown as FileList)[0];
             await vacationForAdminService.updateVacation(vacation);
             notify.success("Vacation has been updated");
             navigate("/vacations");
@@ -49,9 +41,9 @@ function EditVacation(): JSX.Element {
         }
     }
 
-     const validateEndDate = (args: ChangeEvent<HTMLInputElement>) => {
+    const validateEndDate = (args: ChangeEvent<HTMLInputElement>) => {
         setStartDate(args.target.valueAsDate);
-    }; 
+    };
 
     return (
         <div className="EditVacation Box">
@@ -63,21 +55,21 @@ function EditVacation(): JSX.Element {
                 <input type="hidden" {...register("vacationId")} />
 
                 <label>Destination: </label>
-                <input type="textArea" {...register("destination", VacationModel.destinationValidation)}/>
+                <input type="textArea" {...register("destination", VacationModel.destinationValidation)} />
                 <span className="Err">{formState.errors.destination?.message}</span>
 
                 <label>Description: </label>
-                <br/>
+                <br />
                 <textarea {...register("description", VacationModel.descriptionValidation)} />
                 <span className="Err">{formState.errors.description?.message}</span>
 
-                <br/>
+                <br />
                 <label>start date: </label>
-                <input type="date" {...register("startDate", VacationModel.startDateValidation)} onChange={validateEndDate} min={new Date().toISOString().substring(0, 10)} />
+                <input type="date" {...register("startDate", VacationModel.startDateValidation)} onChange={validateEndDate} />
                 <span className="Err">{formState.errors.startDate?.message}</span>
 
                 <label>End date: </label>
-                <input type="date" {...register("endDate", VacationModel.endDateValidation)} min={new Date().toISOString().substring(0, 10)}/>
+                <input type="date" {...register("endDate", VacationModel.endDateValidation)} />
                 <span className="Err">{formState.errors.endDate?.message}</span>
 
                 <label>Price: </label>
@@ -87,6 +79,8 @@ function EditVacation(): JSX.Element {
                 <label>Image: </label>
                 <input type="file" accept="image/*" {...register("image")} />
                 <span className="Err">{formState.errors.image?.message}</span>
+
+                <img src={vacation?.imageName}/>
 
                 <button>Update</button>
 

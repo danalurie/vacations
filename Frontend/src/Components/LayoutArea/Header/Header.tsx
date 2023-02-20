@@ -1,6 +1,5 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import imageSource from "../../../Assets/Images/globe-logo.svg";
 import AuthMenu from "../../AuthArea/AuthMenu/AuthMenu";
-import imageSource from "../../../Assets/Images/globe-logo.svg"
 import "./Header.css";
 
 function Header(): JSX.Element {

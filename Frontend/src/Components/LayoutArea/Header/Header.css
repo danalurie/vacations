@@ -2,7 +2,7 @@
 	text-align: left;
 }
 
-.Header img{
+.Header>img{
     height: 70px;
 }
 .Header>span{
