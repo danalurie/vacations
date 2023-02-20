@@ -49,7 +49,7 @@ function EditVacation(): JSX.Element {
         <div className="EditVacation Box">
             <h2>Edit Vacation</h2>
 
-            <form onSubmit={handleSubmit(send)}>
+            <form onSubmit={handleSubmit(send)} className="EditForm">
 
                 {/* Hiding the id on the form in a Hidden input: */}
                 <input type="hidden" {...register("vacationId")} />
@@ -69,7 +69,7 @@ function EditVacation(): JSX.Element {
                 <span className="Err">{formState.errors.startDate?.message}</span>
 
                 <label>End date: </label>
-                <input type="date" {...register("endDate", VacationModel.endDateValidation)} />
+                <input type="date" {...register("endDate", VacationModel.endDateValidation)} min={startDate.toISOString().slice(0,-14)}/>
                 <span className="Err">{formState.errors.endDate?.message}</span>
 
                 <label>Price: </label>

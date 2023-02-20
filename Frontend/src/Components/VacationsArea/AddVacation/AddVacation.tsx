@@ -23,10 +23,12 @@ function AddVacation(): JSX.Element {
         }
     }
 
-    const validateEndDate = (args: ChangeEvent<HTMLInputElement>) => {
+    const validateEndDate = (args: ChangeEvent<HTMLInputElement>) => {        
         setStartDate(args.target.valueAsDate);
+        console.log(startDate);
     };
 
+    
     return (
         <div className="AddVacation Box">
             <h2> Add Vacation</h2>
@@ -44,11 +46,11 @@ function AddVacation(): JSX.Element {
 
                 <br/>
                 <label>start date: </label>
-                <input type="date" onChange={validateEndDate} min={new Date().toISOString().substring(0, 10)} {...register("startDate", VacationModel.startDateValidation)} />
+                <input type="date" min={new Date().toISOString().slice(0, -14)} {...register("startDate", VacationModel.startDateValidation)} onChange={validateEndDate} />
                 <span className="Err">{formState.errors.startDate?.message}</span>
 
                 <label>End date: </label>
-                <input type="date" {...register("endDate", VacationModel.endDateValidation)} min={new Date().toISOString().substring(0, 10)} />
+                <input type="date" {...register("endDate", VacationModel.endDateValidation)} min={startDate.toISOString().slice(0,-14)} />
                 <span className="Err">{formState.errors.endDate?.message}</span>
 
                 <label>Price: </label>

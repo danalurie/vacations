@@ -53,8 +53,7 @@ function VacationCard(props: VacationCardProps): JSX.Element {
 
     return (
         <div className="VacationCard Box">
-            <img className="imgCard" src={props.vacation?.imageName} />
-            <br />
+        
             <div className="cardBtn">{storedUserRole === "Admin" ?
                 <div className="ButtonContainer">
                     <button className="EditBtn">
@@ -69,7 +68,6 @@ function VacationCard(props: VacationCardProps): JSX.Element {
                             Delete
                         </NavLink>
                     </button>
-
                 </div>
                 :
                 <div>
@@ -84,6 +82,9 @@ function VacationCard(props: VacationCardProps): JSX.Element {
                     {props.vacation.followersCount}
                 </div>
             }
+            <br />
+            <img className="imgCard" src={props.vacation?.imageName} />
+            <br />
             </div >
             <div className='Destination'>
                 {props.vacation.destination}

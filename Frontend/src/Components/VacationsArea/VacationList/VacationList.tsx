@@ -16,6 +16,7 @@ function VacationList({ currentVacations }: { currentVacations: VacationModel[] 
         if(!authStore.getState().user) {
             navigate("/home");
         }
+        setUser(authStore.getState().user)
     }, []);
 
     return (
