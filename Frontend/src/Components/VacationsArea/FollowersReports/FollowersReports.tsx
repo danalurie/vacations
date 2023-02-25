@@ -11,6 +11,7 @@ import "./FollowersReports.css";
 function FollowersReports(): JSX.Element {
     const [followers, setFollowers] = useState<ReportModel[]>([]);
 
+    Chart.defaults.font.size = 13;
     //all the categories used in the chart:
     Chart.register(
         CategoryScale,
@@ -43,6 +44,7 @@ function FollowersReports(): JSX.Element {
                         label: "Number of followers for each vacation",
                         data: followers.map(f => f.followersCount),
                         backgroundColor: "#92a4c0",
+                        borderColor:"#5c5470",
                         borderWidth: 3
                     }]
                 }}
@@ -52,7 +54,7 @@ function FollowersReports(): JSX.Element {
                         legend: { display: true, position: "top" }
                     },
                     scales: {
-                        y: { beginAtZero: true, ticks: { color: "black", stepSize: 1 } },
+                        y: { beginAtZero: true, ticks: { color: "black", stepSize: 1,  } },
                         x: { ticks: { color: "black" } }
                     }
                 }}

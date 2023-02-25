@@ -2,7 +2,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import Login from "../../AuthArea/Login/Login";
 import Register from "../../AuthArea/Register/Register";
 import Home from "../../HomeArea/Home/Home";
-import Pagination from "../../SharedArea/Pagination/Pagination";
+import Pagination from "../../VacationsArea/Pagination/Pagination";
 import AddVacation from "../../VacationsArea/AddVacation/AddVacation";
 import EditVacation from "../../VacationsArea/EditVacation/EditVacation";
 import FollowersReports from "../../VacationsArea/FollowersReports/FollowersReports";

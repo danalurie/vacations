@@ -33,7 +33,7 @@ function AddVacation(): JSX.Element {
         <div className="AddVacation Box">
             <h2> Add Vacation</h2>
 
-            <form onSubmit={handleSubmit(send)}>
+            <form onSubmit={handleSubmit(send)} className="AddForm">
 
                 <label>Destination: </label>
                 <input type="text" {...register("destination", VacationModel.destinationValidation)} />
@@ -64,7 +64,7 @@ function AddVacation(): JSX.Element {
                 <button>Add</button>
 
             </form>
-            <NavLink to="/vacations">Back</NavLink>
+            <NavLink to="/vacations" className="NavLink">Back</NavLink>
 
         </div>
     );

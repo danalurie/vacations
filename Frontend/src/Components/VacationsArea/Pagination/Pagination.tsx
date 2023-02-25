@@ -10,7 +10,7 @@ import { PageActionType, PageState, pageStore } from '../../../Redux/PageState';
 import { vacationsStore } from '../../../Redux/VacationState';
 import vacationForAdminService from '../../../Services/VacationForAdminService';
 import vacationForUserService from '../../../Services/VacationForUserService';
-import VacationList from '../../VacationsArea/VacationList/VacationList';
+import VacationList from '../VacationList/VacationList';
 import "./Pagination.css";
 
 function Pagination(): JSX.Element {

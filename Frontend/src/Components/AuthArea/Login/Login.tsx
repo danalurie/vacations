@@ -6,7 +6,6 @@ import CredentialsModel from "../../../Models/CredentialsModel";
 import UserModel from "../../../Models/UserModel";
 import authService from "../../../Services/AuthService";
 import notify from "../../../Utils/Notify";
-import "./Login.css";
 
 function Login(): JSX.Element {
     const { register, handleSubmit, formState } = useForm<CredentialsModel>();
@@ -40,7 +39,7 @@ function Login(): JSX.Element {
 
                 <button>Login</button>
                 <br/>
-                <NavLink to="/home">Back</NavLink>
+                <NavLink to="/home" className="NavLink">Back</NavLink>
 
             </form>
         </div>

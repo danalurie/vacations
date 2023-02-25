@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { NavLink, useNavigate } from "react-router-dom";
 import UserModel from "../../../Models/UserModel";
@@ -48,11 +47,10 @@ function Register(): JSX.Element {
                 <button>Register</button>
                 <br/>
 
-                <h5>Already a member?</h5>
+                <span>Already a member? </span>
+                <NavLink to="/login" className="NavLink">Login</NavLink>
                 <br />
-                <NavLink to="/login">Login</NavLink>
-                <br />
-                <NavLink to="/home">Back</NavLink>
+                <NavLink to="/home" className="NavLink">Back</NavLink>
             </form>
         </div>
     );
