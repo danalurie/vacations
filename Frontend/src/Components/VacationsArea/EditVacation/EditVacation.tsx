@@ -1,3 +1,4 @@
+import { read } from "fs";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
@@ -23,15 +24,16 @@ function EditVacation(): JSX.Element {
                 setValue("startDate", new Date(vacation.startDate).toISOString().slice(0, 10));
                 setValue("endDate", new Date(vacation.endDate).toISOString().slice(0, 10));
                 setValue("price", vacation.price);
-                setValue("image", vacation.image);                
+                setValue("image", vacation.image);
                 setVacation(vacation);
+                setStartDate(new Date(vacation.startDate));
             })
             .catch(err => notify.error(err));
-    }, [])
+    }, []);
 
     async function send(vacation: VacationModel) {
         try {
-            vacation.image = (vacation.image as unknown as FileList)[0];
+            vacation.image = vacation.image && (vacation.image as unknown as FileList)[0];            
             await vacationForAdminService.updateVacation(vacation);
             notify.success("Vacation has been updated");
             navigate("/vacations");
@@ -69,7 +71,7 @@ function EditVacation(): JSX.Element {
                 <span className="Err">{formState.errors.startDate?.message}</span>
 
                 <label>End date: </label>
-                <input type="date" {...register("endDate", VacationModel.endDateValidation)} min={startDate.toISOString().slice(0,-14)}/>
+                <input type="date" {...register("endDate", VacationModel.endDateValidation)} min={startDate.toISOString().slice(0, -14)} />
                 <span className="Err">{formState.errors.endDate?.message}</span>
 
                 <label>Price: </label>
@@ -77,10 +79,10 @@ function EditVacation(): JSX.Element {
                 <span className="Err">{formState.errors.price?.message}</span>
 
                 <label>Image: </label>
-                <input type="file" accept="image/*" {...register("image")} />
+                <input type="file" accept="image/*" {...register("image")}/>
                 <span className="Err">{formState.errors.image?.message}</span>
 
-                <img src={vacation?.imageName}/>
+                <img className="EditImg" src={vacation?.imageName} />
 
                 <button>Update</button>
 
@@ -92,3 +94,5 @@ function EditVacation(): JSX.Element {
 }
 
 export default EditVacation;
+
+

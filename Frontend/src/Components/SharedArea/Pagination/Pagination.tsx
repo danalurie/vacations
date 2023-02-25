@@ -1,9 +1,12 @@
-import { styled } from '@mui/material/styles';
+import AddIcon from '@mui/icons-material/Add';
+import BarChartIcon from '@mui/icons-material/BarChart';
 import { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
+import { NavLink, useNavigate } from 'react-router-dom';
 import UserModel from '../../../Models/UserModel';
 import VacationModel from '../../../Models/VacationModel';
 import { authStore } from '../../../Redux/AuthState';
+import { PageActionType, PageState, pageStore } from '../../../Redux/PageState';
 import { vacationsStore } from '../../../Redux/VacationState';
 import vacationForAdminService from '../../../Services/VacationForAdminService';
 import vacationForUserService from '../../../Services/VacationForUserService';
@@ -18,9 +21,19 @@ function Pagination(): JSX.Element {
     const [filterFuture, setFilterFuture] = useState<boolean>(false);
     const [filterIsOn, setFilterIsOn] = useState<boolean>(false);
 
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!authStore.getState().user) {
+            navigate("/home");
+        }
+        setUser(authStore.getState().user)
+    }, []);
+
     //pagination:
     const vacationsPerPage = 9;
     const [startOffset, setStartOffset] = useState(0)
+
 
     //check the last vacation for current page
     const endOffset = startOffset + vacationsPerPage;
@@ -32,6 +45,9 @@ function Pagination(): JSX.Element {
     const pageCount = Math.ceil(vacations.length / vacationsPerPage);
 
     const handlePageClick = (event: any) => {
+        pageStore.dispatch({ type: PageActionType.SetPage, payload: event.selected});
+        console.log(event.selected);
+
         const newOffset = (event.selected * vacationsPerPage) % vacations.length;
         setStartOffset(newOffset)
     }
@@ -51,8 +67,9 @@ function Pagination(): JSX.Element {
         return vacations;
     }
     useEffect(() => {
+        if (!user) return;
         if (user && user.role === "Admin") {
-            vacationForAdminService.getAllVacationForAdmin()
+            vacationForAdminService.getAllVacationForAdmin();
             setVacations(vacationsStore.getState().vacations);
             vacationsStore.subscribe(() => {
                 setVacations(vacationsStore.getState().vacations)
@@ -70,7 +87,7 @@ function Pagination(): JSX.Element {
 
     return (
         <>
-            {user?.role === "User" &&
+            {user?.role === "User" ?
                 <div>
                     <input type="checkbox" onChange={(e) => {
                         setFilterFollow(e.target.checked);
@@ -91,17 +108,25 @@ function Pagination(): JSX.Element {
                     }} />
                     <label>Future vacation</label>
                 </div>
+                :
+                <div className='AdminIcons'>
+                    {user?.role === "Admin" && <NavLink to="/vacations/add"><AddIcon /></NavLink>}
+                    {user?.role === "Admin" && <NavLink to="/vacations/reports"><BarChartIcon /></NavLink>}
+                </div>
             }
 
+
             <VacationList currentVacations={currentVacation} />
-            <ReactPaginate className="paginate"
+            <ReactPaginate
                 breakLabel="..."
-                nextLabel="next >"
+                nextLabel=" >"
                 onPageChange={handlePageClick}
                 pageRangeDisplayed={5}
                 pageCount={pageCount}
-                previousLabel="< previous"
+                previousLabel="< "
                 renderOnZeroPageCount={null}
+                containerClassName="paginate"
+                activeClassName="activePage"
             />
         </>
     );

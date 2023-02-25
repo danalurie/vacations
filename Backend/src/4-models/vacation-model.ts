@@ -41,7 +41,7 @@ class VacationModel {
         startDate: Joi.date().required(),
         endDate: Joi.date().required(),
         price: Joi.number().required().positive(),
-        imageName: Joi.string().optional().min(38).max(50),
+        imageName: Joi.string().forbidden().min(38).max(50),
         image: Joi.object().optional()
     });
 

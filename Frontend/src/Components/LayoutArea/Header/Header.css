@@ -4,6 +4,7 @@
 
 .Header>img{
     height: 70px;
+    margin-top: -40px;
 }
 .Header>span{
     font-weight: 900;

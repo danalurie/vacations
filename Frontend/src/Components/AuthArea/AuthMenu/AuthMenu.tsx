@@ -10,12 +10,10 @@ function AuthMenu(): JSX.Element {
     const [user, setUser] = useState<UserModel>();
 
     useEffect(() => {
-
         setUser(authStore.getState().user);
         authStore.subscribe(() => {
             setUser(authStore.getState().user);
         });
-
     }, []);
 
     function logout(): void {

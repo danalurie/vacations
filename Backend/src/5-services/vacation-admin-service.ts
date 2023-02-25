@@ -5,14 +5,17 @@ import imageHandler from "../2-utils/image-handler";
 import { ResourceNotFoundError } from "../4-models/client-errors";
 import UserModel from "../4-models/user-model";
 import VacationModel from "../4-models/vacation-model";
+import ReportModel from "../4-models/report-model";
 
 async function getAllVacationForAdmin(admin: UserModel): Promise<VacationModel[]> {
     const sql = "SELECT *, CONCAT( ?, imageName) AS imageName FROM vacations ORDER BY startDate";
     const vacations = await dal.execute(sql, appConfig.adminImage);
     console.log(vacations);
-    
+
     return vacations;
 }
+
+
 
 async function getOneVacation(vacationId: number): Promise<VacationModel> {
     const sql = "SELECT *, CONCAT(?, imageName) AS imageName FROM vacations WHERE vacationId = ?"
@@ -79,10 +82,22 @@ async function getImageNameFromDB(vacationId: number): Promise<string> {
     return vacation.imageName;
 }
 
+async function getFollowers(): Promise<ReportModel[]> {
+    const sql = `SELECT DISTINCT
+                    V.destination,
+                    COUNT(F.userId) AS followersCount
+                    FROM vacations AS V LEFT JOIN followers AS F
+                    ON V.vacationId = F.vacationId
+                    GROUP BY V.vacationId`;
+    const followersVacation = await dal.execute(sql);
+    return followersVacation;
+}
+
 export default {
     getAllVacationForAdmin,
     getOneVacation,
     addVacation,
     deleteVacation,
-    updateVacation
+    updateVacation,
+    getFollowers
 }

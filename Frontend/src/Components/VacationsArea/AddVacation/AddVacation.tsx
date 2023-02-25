@@ -54,7 +54,7 @@ function AddVacation(): JSX.Element {
                 <span className="Err">{formState.errors.endDate?.message}</span>
 
                 <label>Price: </label>
-                <input type="number" step="0.01" {...register("price", VacationModel.priceValidation)} />
+                <input type="number" step="0.01" {...register("price", VacationModel.priceValidation)} pattern="$"/>
                 <span className="Err">{formState.errors.price?.message}</span>
 
                 <label>Image: </label>
