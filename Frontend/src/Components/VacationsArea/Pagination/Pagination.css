@@ -1,10 +1,11 @@
-.paginate {
+.Paginate {
     list-style: none;
     display: flex;
     gap: 10px;
     justify-content: center;
 }
 
-.activePage {
+.ActivePage {
     color: red;
+    cursor: pointer;
 }

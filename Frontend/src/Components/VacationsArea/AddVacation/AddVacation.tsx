@@ -44,8 +44,7 @@ function AddVacation(): JSX.Element {
                 <textarea {...register("description", VacationModel.descriptionValidation)} />
                 <span className="Err">{formState.errors.description?.message}</span>
 
-                <br/>
-                <label>start date: </label>
+                <label>Start date: </label>
                 <input type="date" min={new Date().toISOString().slice(0, -14)} {...register("startDate", VacationModel.startDateValidation)} onChange={validateEndDate} />
                 <span className="Err">{formState.errors.startDate?.message}</span>
 

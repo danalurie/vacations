@@ -84,7 +84,6 @@ function Pagination(): JSX.Element {
         }
     }, [filterFollow, filterFuture, filterIsOn]);
 
-
     return (
         <>
             {user?.role === "User" ?
@@ -125,8 +124,8 @@ function Pagination(): JSX.Element {
                 pageCount={pageCount}
                 previousLabel="< "
                 renderOnZeroPageCount={null}
-                containerClassName="paginate"
-                activeClassName="activePage"
+                containerClassName="Paginate"
+                activeClassName="ActivePage"
             />
         </>
     );

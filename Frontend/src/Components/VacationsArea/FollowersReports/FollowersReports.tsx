@@ -1,6 +1,6 @@
 import DownloadIcon from '@mui/icons-material/Download';
 import { BarElement, CategoryScale, Chart, Legend, LinearScale, Title, Tooltip } from "chart.js";
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 import { Bar } from "react-chartjs-2";
 import { CSVLink } from "react-csv";
 import ReportModel from "../../../Models/ReportModel";
