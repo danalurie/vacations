@@ -3,13 +3,26 @@ import { BarElement, CategoryScale, Chart, Legend, LinearScale, Title, Tooltip }
 import { useEffect, useState } from 'react';
 import { Bar } from "react-chartjs-2";
 import { CSVLink } from "react-csv";
+import { useNavigate } from 'react-router';
 import ReportModel from "../../../Models/ReportModel";
+import UserModel from '../../../Models/UserModel';
+import { authStore } from '../../../Redux/AuthState';
 import vacationForAdminService from "../../../Services/VacationForAdminService";
 import notify from "../../../Utils/Notify";
 import "./FollowersReports.css";
 
 function FollowersReports(): JSX.Element {
     const [followers, setFollowers] = useState<ReportModel[]>([]);
+    const [user, setUser] = useState<UserModel>(authStore.getState().user);
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!authStore.getState().user) {
+            navigate("/home");
+        }
+        setUser(authStore.getState().user)
+    }, []);
 
     Chart.defaults.font.size = 13;
     //all the categories used in the chart:
@@ -36,7 +49,7 @@ function FollowersReports(): JSX.Element {
 
     return (
         <div className="FollowersReports">
-            <CSVLink data={followers} className="CsvLink"><DownloadIcon/></CSVLink>
+            <CSVLink data={followers} className="CsvLink"><DownloadIcon /></CSVLink>
             <Bar
                 data={{
                     labels: followers.map(f => f.destination),
@@ -44,7 +57,7 @@ function FollowersReports(): JSX.Element {
                         label: "Number of followers for each vacation",
                         data: followers.map(f => f.followersCount),
                         backgroundColor: "#92a4c0",
-                        borderColor:"#5c5470",
+                        borderColor: "#5c5470",
                         borderWidth: 3
                     }]
                 }}
@@ -54,7 +67,7 @@ function FollowersReports(): JSX.Element {
                         legend: { display: true, position: "top" }
                     },
                     scales: {
-                        y: { beginAtZero: true, ticks: { color: "black", stepSize: 1,  } },
+                        y: { beginAtZero: true, ticks: { color: "black", stepSize: 1, } },
                         x: { ticks: { color: "black" } }
                     }
                 }}
